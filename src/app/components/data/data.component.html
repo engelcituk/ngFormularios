@@ -1,0 +1,108 @@
+<h4>Formularios <small>data</small></h4>
+<hr>
+<form [formGroup]="forma" (ngSubmit)="guardarCambios()">
+
+    <div formGroupName="nombrecompleto">
+         
+        <div class="form-group row" [ngClass]="{'has-danger': !forma.get('nombrecompleto.nombre').valid }"
+        >
+        <!--   [ngClass]="{'has-danger': !forma.get('nombrecompleto.nombre').valid }"
+            [ngClass]="{'has-danger': !forma.controls['nombrecompleto'].controls['nombre'].valid }" -->
+            <label class="col-2 col-form-label">Nombre</label>
+            <div class="col-8">
+
+                <input formControlName="nombre"
+                       class="form-control"
+                       type="text"
+                       placeholder="Nombre">
+
+                <div *ngIf="forma.get('nombrecompleto.nombre').errors?.required"
+                    class="form-control-feedback">
+                    Este campo nombre es requerido
+                </div>
+                <div *ngIf="forma.get('nombrecompleto.nombre').errors?.minlength" class="form-control-feedback">
+                    Por lo menos 3 caracteres
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Apellido</label>
+            <div class="col-8">
+
+                <input  formControlName="apellido"
+                    class="form-control" type="text" placeholder="Apellido">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Correo</label>
+        <div class="col-md-8">
+
+            <input formControlName="correo"
+                class="form-control" type="email" placeholder="Correo electrónico">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Pasatiempos</label>
+        <div class="col-md-8" formArrayName="pasatiempos">
+
+            <input 
+                *ngFor="let pasatiempo of forma.controls['pasatiempos'].controls; let i = index"
+                [formControlName]="i"
+                type="text"
+                class="form-control">
+
+                <button (click)="agregarPasatiempo()"
+                    type="button"
+                    class="btn btn-primary">
+                    Nuevo
+                </button>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Password</label>
+        <div class="col-md-8">
+            <input 
+                type="text"
+                class="form-control"
+                formControlName="username"
+                placeholder="Usuario">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Password</label>
+        <div class="col-md-8">
+            <input 
+                class="form-control"
+                type="password"
+                formControlName="password"
+                placeholder="contraseña">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Repite password</label>
+        <div class="col-md-8">
+            <input 
+            class="form-control"
+            type="password"
+            formControlName="password2"
+            placeholder="repetir contraseña">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-2 col-form-label">&nbsp;</label>
+        <div class="input-group col-md-8">
+            <button type="submit" class="btn btn-outline-primary">
+                Guardar
+            </button>
+        </div>
+    </div>
+    {{forma.valid}}
+    <br>
+    {{forma.status}}
+
+</form>
